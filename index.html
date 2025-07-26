@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Espion</title>
+    <title>Mission Espionnage</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Courier New', monospace;
             margin: 0;
             padding: 0;
+            background-color: #1a1a1a;
+            color: lime;
+            overflow: hidden;
         }
         #loginPage {
             display: flex;
@@ -24,6 +27,8 @@
             margin: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            background-color: #222;
+            color: lime;
         }
         #loginPage button {
             padding: 10px 20px;
@@ -31,6 +36,10 @@
             border: none;
             color: white;
             border-radius: 5px;
+            cursor: pointer;
+        }
+        #loginPage button:hover {
+            background-color: #555;
         }
         #mainPage {
             display: none;
@@ -38,6 +47,7 @@
             color: lime;
             padding: 20px;
             height: 100vh;
+            overflow-y: auto;
         }
         #alert {
             display: none;
@@ -70,6 +80,10 @@
             border: none;
             color: white;
             border-radius: 5px;
+            cursor: pointer;
+        }
+        #planButton:hover {
+            background-color: #555;
         }
         #disconnectButton {
             margin-top: 20px;
@@ -77,6 +91,37 @@
             background-color: #444;
             border: none;
             color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #disconnectButton:hover {
+            background-color: #555;
+        }
+        .code-line {
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 2s steps(50) infinite;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+        .progress-bar {
+            width: 100%;
+            background-color: #333;
+            border-radius: 5px;
+            margin-top: 20px;
+            height: 25px;
+        }
+        .progress {
+            height: 100%;
+            background-color: lime;
             border-radius: 5px;
         }
     </style>
@@ -94,8 +139,11 @@
 <!-- Page espion -->
 <div id="mainPage">
     <h1>Système Espion - Accès autorisé</h1>
-    <p>Accès aux données secrètes...</p>
-    <p>Carte et plans des ennemis...</p>
+    <p>Mission : Pirater le réseau de l'ennemi...</p>
+    <div class="code-line">Connexion au serveur principal...</div>
+    <div class="code-line">Téléchargement des données en cours...</div>
+    <div class="code-line">Extraction des fichiers secrets...</div>
+    <div class="code-line">Mise à jour du système sécurisé...</div>
     <div id="alert">Alerte! Intrusion détectée!</div>
     <input type="text" id="search-bar" placeholder="Tapez 'serveuronline'...">
 </div>
@@ -103,9 +151,13 @@
 <!-- Plan du bâtiment -->
 <div id="planPage">
     <h2>Plan du bâtiment - Mission en cours</h2>
-    <p>Sous le plan du projet: <span id="plan-name"></span></p>
+    <p>Nom de la mission : <span id="mission-name">Infiltration C</span></p>
+    <img src="https://via.placeholder.com/600x400?text=Plan+du+B%C3%A2timent" alt="Plan du Bâtiment" style="width: 80%; border-radius: 5px;">
     <input type="text" id="project-name" placeholder="Plan copieproject">
     <button id="planButton" onclick="startLoading()">Charger le plan</button>
+    <div class="progress-bar">
+        <div id="progress" class="progress" style="width: 0%;"></div>
+    </div>
 </div>
 
 <!-- Déconnexion -->
@@ -142,16 +194,23 @@
         if (this.value === 'serveuronline') {
             document.getElementById('planPage').style.display = 'block';
             document.getElementById('mainPage').style.display = 'none';
-            document.getElementById('plan-name').textContent = 'copieproject';
+            document.getElementById('mission-name').textContent = 'Infiltration C';
         }
     });
 
-    // Chargement du plan (simulation)
+    // Chargement du plan avec pourcentage
     function startLoading() {
+        let progress = 0;
+        const progressBar = document.getElementById('progress');
         document.getElementById('planButton').textContent = 'Chargement...';
-        setTimeout(() => {
-            document.getElementById('planButton').textContent = 'Plan chargé!';
-        }, 15000);
+        const loadingInterval = setInterval(() => {
+            progress += 5;
+            progressBar.style.width = progress + '%';
+            if (progress >= 100) {
+                clearInterval(loadingInterval);
+                document.getElementById('planButton').textContent = 'Plan chargé!';
+            }
+        }, 1000);
     }
 
     // Déconnexion
