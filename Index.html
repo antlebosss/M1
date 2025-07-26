@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Espion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        #loginPage {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #333;
+            color: white;
+            flex-direction: column;
+        }
+        #loginPage input {
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #loginPage button {
+            padding: 10px 20px;
+            background-color: #444;
+            border: none;
+            color: white;
+            border-radius: 5px;
+        }
+        #mainPage {
+            display: none;
+            background-color: black;
+            color: lime;
+            padding: 20px;
+            height: 100vh;
+        }
+        #alert {
+            display: none;
+            background-color: red;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 18px;
+        }
+        #search-bar {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #222;
+            color: lime;
+            border: none;
+            width: 60%;
+            text-align: center;
+        }
+        #planPage {
+            display: none;
+            text-align: center;
+            background-color: black;
+            color: lime;
+            padding: 20px;
+        }
+        #planButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #444;
+            border: none;
+            color: white;
+            border-radius: 5px;
+        }
+        #disconnectButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #444;
+            border: none;
+            color: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Page de connexion -->
+<div id="loginPage">
+    <h1>Accès Espionnage</h1>
+    <input type="text" id="username" placeholder="Identifiant">
+    <input type="password" id="password" placeholder="Mot de passe">
+    <button onclick="login()">Se connecter</button>
+</div>
+
+<!-- Page espion -->
+<div id="mainPage">
+    <h1>Système Espion - Accès autorisé</h1>
+    <p>Accès aux données secrètes...</p>
+    <p>Carte et plans des ennemis...</p>
+    <div id="alert">Alerte! Intrusion détectée!</div>
+    <input type="text" id="search-bar" placeholder="Tapez 'serveuronline'...">
+</div>
+
+<!-- Plan du bâtiment -->
+<div id="planPage">
+    <h2>Plan du bâtiment - Mission en cours</h2>
+    <p>Sous le plan du projet: <span id="plan-name"></span></p>
+    <input type="text" id="project-name" placeholder="Plan copieproject">
+    <button id="planButton" onclick="startLoading()">Charger le plan</button>
+</div>
+
+<!-- Déconnexion -->
+<button id="disconnectButton" onclick="disconnect()">Déconnexion</button>
+
+<script>
+    // Variables globales
+    let loginValid = false;
+
+    // Fonction de connexion
+    function login() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        if (username === 'user34t6' && password === 'xty3457') {
+            loginValid = true;
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('mainPage').style.display = 'block';
+
+            // Alerte après 10 secondes
+            setTimeout(() => {
+                document.getElementById('alert').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('alert').style.display = 'none';
+                }, 5000);
+            }, 10000);
+        } else {
+            alert('Identifiant ou mot de passe incorrect.');
+        }
+    }
+
+    // Recherche "serveuronline"
+    document.getElementById('search-bar').addEventListener('input', function() {
+        if (this.value === 'serveuronline') {
+            document.getElementById('planPage').style.display = 'block';
+            document.getElementById('mainPage').style.display = 'none';
+            document.getElementById('plan-name').textContent = 'copieproject';
+        }
+    });
+
+    // Chargement du plan (simulation)
+    function startLoading() {
+        document.getElementById('planButton').textContent = 'Chargement...';
+        setTimeout(() => {
+            document.getElementById('planButton').textContent = 'Plan chargé!';
+        }, 15000);
+    }
+
+    // Déconnexion
+    function disconnect() {
+        location.reload(); // Recharge la page pour revenir à la page de connexion
+    }
+</script>
+
+</body>
+</html>
