@@ -111,6 +111,16 @@
       padding: 10px 20px;
       background-color: #444;
     }
+
+    #action-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    #action-buttons button {
+      margin-right: 10px;
+    }
   </style>
 </head>
 <body>
@@ -147,8 +157,10 @@ Rez-de-chaussée :
   - Laboratoire
   - Salle de réunion
   </pre>
-  <input type="text" id="project-name" placeholder="Plan copieproject">
-  <button onclick="startLoading()">Charger le plan</button>
+  <div id="action-buttons">
+    <button onclick="lancerProgramme()">Lancer le programme</button>
+    <button onclick="startLoading()">Charger le plan</button>
+  </div>
   <div class="progress-bar">
     <div class="progress" id="progressBar"></div>
   </div>
@@ -212,11 +224,43 @@ Rez-de-chaussée :
 
   document.getElementById('search-bar').addEventListener('input', function () {
     if (this.value.toLowerCase() === 'serveuronline') {
-      document.getElementById('mainPage').style.display = 'none';
-      document.getElementById('planPage').style.display = 'block';
-      document.getElementById('disconnectButton').style.display = 'inline-block';
+      // Démarrer les lignes de code inutiles pendant 15s
+      startUselessCode();
     }
   });
+
+  function startUselessCode() {
+    const consoleEl = document.getElementById('console');
+    const uselessLines = [
+      "Initialisation du programme...",
+      "Processus interne en cours...",
+      "Analyse de données non pertinentes...",
+      "Traitement des données inutiles...",
+      "Vérification du statut des serveurs (sans importance)...",
+      "Enregistrement des failles sécuritaires inexistantes...",
+      "Vérification des connexions invisibles...",
+      "Synchronisation avec aucune source...",
+      "Etendues des processus indéfinis...",
+      "Validation des failles imaginaires..."
+    ];
+    let i = 0;
+    const uselessInterval = setInterval(() => {
+      if (i < uselessLines.length) {
+        const line = document.createElement('div');
+        line.className = 'line';
+        line.textContent = uselessLines[i];
+        consoleEl.appendChild(line);
+        i++;
+      } else {
+        clearInterval(uselessInterval);
+        setTimeout(() => {
+          document.getElementById('planPage').style.display = 'block';
+          document.getElementById('mainPage').style.display = 'none';
+          document.getElementById('disconnectButton').style.display = 'inline-block';
+        }, 1000);
+      }
+    }, 1000);
+  }
 
   function startLoading() {
     const bar = document.getElementById('progressBar');
@@ -229,6 +273,10 @@ Rez-de-chaussée :
         alert("✅ Plan chargé avec succès !");
       }
     }, 750);
+  }
+
+  function lancerProgramme() {
+    alert("🚨 Programme lancé !");
   }
 
   function disconnect() {
