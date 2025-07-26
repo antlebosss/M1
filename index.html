@@ -1,222 +1,239 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mission Espionnage</title>
-    <style>
-        body {
-            font-family: 'Courier New', monospace;
-            margin: 0;
-            padding: 0;
-            background-color: #1a1a1a;
-            color: lime;
-            overflow: hidden;
-        }
-        #loginPage {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #333;
-            color: white;
-            flex-direction: column;
-        }
-        #loginPage input {
-            padding: 10px;
-            margin: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #222;
-            color: lime;
-        }
-        #loginPage button {
-            padding: 10px 20px;
-            background-color: #444;
-            border: none;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #loginPage button:hover {
-            background-color: #555;
-        }
-        #mainPage {
-            display: none;
-            background-color: black;
-            color: lime;
-            padding: 20px;
-            height: 100vh;
-            overflow-y: auto;
-        }
-        #alert {
-            display: none;
-            background-color: red;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            font-size: 18px;
-        }
-        #search-bar {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #222;
-            color: lime;
-            border: none;
-            width: 60%;
-            text-align: center;
-        }
-        #planPage {
-            display: none;
-            text-align: center;
-            background-color: black;
-            color: lime;
-            padding: 20px;
-        }
-        #planButton {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #444;
-            border: none;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #planButton:hover {
-            background-color: #555;
-        }
-        #disconnectButton {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #444;
-            border: none;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #disconnectButton:hover {
-            background-color: #555;
-        }
-        .code-line {
-            white-space: nowrap;
-            overflow: hidden;
-            animation: typing 2s steps(50) infinite;
-            font-size: 14px;
-            margin: 5px 0;
-        }
-        @keyframes typing {
-            from {
-                width: 0;
-            }
-            to {
-                width: 100%;
-            }
-        }
-        .progress-bar {
-            width: 100%;
-            background-color: #333;
-            border-radius: 5px;
-            margin-top: 20px;
-            height: 25px;
-        }
-        .progress {
-            height: 100%;
-            background-color: lime;
-            border-radius: 5px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mission Espionnage</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background-color: #1a1a1a;
+      color: lime;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    #loginPage, #mainPage, #planPage {
+      display: none;
+      padding: 30px;
+    }
+
+    #loginPage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #111;
+      color: white;
+    }
+
+    input {
+      padding: 10px;
+      margin: 10px;
+      background-color: #222;
+      border: 1px solid #555;
+      color: lime;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #444;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #666;
+    }
+
+    .console-output {
+      height: 300px;
+      overflow: hidden;
+      border: 1px solid #0f0;
+      padding: 10px;
+      background-color: black;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .line {
+      animation: scrollUp 10s linear forwards;
+    }
+
+    @keyframes scrollUp {
+      0% { transform: translateY(100%); opacity: 0; }
+      5% { opacity: 1; }
+      100% { transform: translateY(0%); opacity: 1; }
+    }
+
+    #alert {
+      display: none;
+      background-color: red;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+
+    #search-bar {
+      padding: 10px;
+      width: 300px;
+      display: none;
+      margin-top: 10px;
+      background-color: #222;
+      color: lime;
+      border: none;
+      text-align: center;
+    }
+
+    .progress-bar {
+      width: 100%;
+      background-color: #333;
+      border-radius: 5px;
+      margin-top: 20px;
+      height: 25px;
+    }
+
+    .progress {
+      height: 100%;
+      background-color: lime;
+      border-radius: 5px;
+      width: 0%;
+    }
+
+    #disconnectButton {
+      display: none;
+      margin: 20px;
+      padding: 10px 20px;
+      background-color: #444;
+    }
+  </style>
 </head>
 <body>
 
 <!-- Page de connexion -->
 <div id="loginPage">
-    <h1>Accès Espionnage</h1>
-    <input type="text" id="username" placeholder="Identifiant">
-    <input type="password" id="password" placeholder="Mot de passe">
-    <button onclick="login()">Se connecter</button>
+  <h1>🔐 Accès Sécurisé</h1>
+  <input type="text" id="username" placeholder="Identifiant">
+  <input type="password" id="password" placeholder="Mot de passe">
+  <button onclick="login()">Connexion</button>
 </div>
 
 <!-- Page espion -->
 <div id="mainPage">
-    <h1>Système Espion - Accès autorisé</h1>
-    <p>Mission : Pirater le réseau de l'ennemi...</p>
-    <div class="code-line">Connexion au serveur principal...</div>
-    <div class="code-line">Téléchargement des données en cours...</div>
-    <div class="code-line">Extraction des fichiers secrets...</div>
-    <div class="code-line">Mise à jour du système sécurisé...</div>
-    <div id="alert">Alerte! Intrusion détectée!</div>
-    <input type="text" id="search-bar" placeholder="Tapez 'serveuronline'...">
+  <h2>✅ Accès autorisé : Agent 34-Tango</h2>
+  <div class="console-output" id="console">
+    <!-- Texte généré dynamiquement -->
+  </div>
+  <div id="alert">⚠️ Alerte ! Intrusion détectée !</div>
+  <input type="text" id="search-bar" placeholder="Tapez 'serveuronline'...">
 </div>
 
 <!-- Plan du bâtiment -->
 <div id="planPage">
-    <h2>Plan du bâtiment - Mission en cours</h2>
-    <p>Nom de la mission : <span id="mission-name">Infiltration C</span></p>
-    <img src="https://via.placeholder.com/600x400?text=Plan+du+B%C3%A2timent" alt="Plan du Bâtiment" style="width: 80%; border-radius: 5px;">
-    <input type="text" id="project-name" placeholder="Plan copieproject">
-    <button id="planButton" onclick="startLoading()">Charger le plan</button>
-    <div class="progress-bar">
-        <div id="progress" class="progress" style="width: 0%;"></div>
-    </div>
+  <h2>📡 Plan du bâtiment - Mission Infiltration</h2>
+  <pre style="text-align:left; font-size: 16px;">
+Rez-de-chaussée :
+  - Cuisine
+  - Salle de surveillance
+  - Bureau du directeur
+
+Étage 1 :
+  - Salle des serveurs
+  - Laboratoire
+  - Salle de réunion
+  </pre>
+  <input type="text" id="project-name" placeholder="Plan copieproject">
+  <button onclick="startLoading()">Charger le plan</button>
+  <div class="progress-bar">
+    <div class="progress" id="progressBar"></div>
+  </div>
 </div>
 
 <!-- Déconnexion -->
 <button id="disconnectButton" onclick="disconnect()">Déconnexion</button>
 
 <script>
-    // Variables globales
-    let loginValid = false;
+  const fakeLines = [
+    "Connexion au terminal espion...",
+    "Accès aux fichiers cryptés...",
+    "Chargement des modules...",
+    "Décryptage des communications ennemies...",
+    "Synchronisation avec satellite espion...",
+    "Scan réseau en cours...",
+    "Identification des serveurs actifs...",
+    "Établissement de la liaison sécurisée...",
+    "Extraction des logs...",
+    "Connexion sécurisée établie."
+  ];
 
-    // Fonction de connexion
-    function login() {
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-
-        if (username === 'user34t6' && password === 'xty3457') {
-            loginValid = true;
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('mainPage').style.display = 'block';
-
-            // Alerte après 10 secondes
-            setTimeout(() => {
-                document.getElementById('alert').style.display = 'block';
-                setTimeout(() => {
-                    document.getElementById('alert').style.display = 'none';
-                }, 5000);
-            }, 10000);
-        } else {
-            alert('Identifiant ou mot de passe incorrect.');
-        }
+  function login() {
+    const user = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
+    if (user === 'user34t6' && pass === 'xty3457') {
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('mainPage').style.display = 'block';
+      startConsoleText();
+      setTimeout(showSearchBar, 10000);
+      setTimeout(() => {
+        document.getElementById('alert').style.display = 'block';
+        setTimeout(() => {
+          document.getElementById('alert').style.display = 'none';
+        }, 5000);
+      }, 10000);
+    } else {
+      alert('Accès refusé.');
     }
+  }
 
-    // Recherche "serveuronline"
-    document.getElementById('search-bar').addEventListener('input', function() {
-        if (this.value === 'serveuronline') {
-            document.getElementById('planPage').style.display = 'block';
-            document.getElementById('mainPage').style.display = 'none';
-            document.getElementById('mission-name').textContent = 'Infiltration C';
-        }
-    });
+  function startConsoleText() {
+    const consoleEl = document.getElementById('console');
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < fakeLines.length) {
+        const line = document.createElement('div');
+        line.className = 'line';
+        line.textContent = fakeLines[i];
+        consoleEl.appendChild(line);
+        i++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 1000);
+  }
 
-    // Chargement du plan avec pourcentage
-    function startLoading() {
-        let progress = 0;
-        const progressBar = document.getElementById('progress');
-        document.getElementById('planButton').textContent = 'Chargement...';
-        const loadingInterval = setInterval(() => {
-            progress += 5;
-            progressBar.style.width = progress + '%';
-            if (progress >= 100) {
-                clearInterval(loadingInterval);
-                document.getElementById('planButton').textContent = 'Plan chargé!';
-            }
-        }, 1000);
+  function showSearchBar() {
+    document.getElementById('search-bar').style.display = 'inline-block';
+  }
+
+  document.getElementById('search-bar').addEventListener('input', function () {
+    if (this.value.toLowerCase() === 'serveuronline') {
+      document.getElementById('mainPage').style.display = 'none';
+      document.getElementById('planPage').style.display = 'block';
+      document.getElementById('disconnectButton').style.display = 'inline-block';
     }
+  });
 
-    // Déconnexion
-    function disconnect() {
-        location.reload(); // Recharge la page pour revenir à la page de connexion
-    }
+  function startLoading() {
+    const bar = document.getElementById('progressBar');
+    let width = 0;
+    const interval = setInterval(() => {
+      width += 5;
+      bar.style.width = width + '%';
+      if (width >= 100) {
+        clearInterval(interval);
+        alert("✅ Plan chargé avec succès !");
+      }
+    }, 750);
+  }
+
+  function disconnect() {
+    location.reload();
+  }
 </script>
 
 </body>
